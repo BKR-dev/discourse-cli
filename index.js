@@ -1,15 +1,18 @@
 require('dotenv').config()
 const fetch = require('node-fetch')
-
+const FormData=require('form-data')
 let API_KEY=process.env.API_KEY
 let url=process.env.URL
 let user=process.env.USER_NAME
-// console.log(`API: ${API_KEY}\nURL: ${url}\nUser: ${user}`)
+
 async function GETemptyTitle(){
 
 try {
 
-    let getBKRJSON=await fetch(`${url}/u/${user}.json`, {method: 'GET', headers: { "Api-Key": `${API_KEY}`, "Api-Username": `${user}`}, contentType: "application/json", dataType: 'json' }).then(response=>{if(response.ok){return response.json()} })
+    let getBKRJSON=await fetch(`${url}/u/${user}.json`, 
+    {
+        method: 'GET', 
+        headers: { "Api-Key": `${API_KEY}`, "Api-Username": `${user}`} }).then(response=>{if(response.ok){return response.json()} })
     
     if(getBKRJSON.user.title===''){
         console.log('Title is empty\nAll is well...')
@@ -27,28 +30,35 @@ try {
 
 async function PUTemptyTitle(){
     try {
-        let data=''
+        let data= new FormData
+        data.append('title','')
         let putBKRJSON=await fetch(`${url}/u/${user}.json`, 
         {
             method: 'PUT', 
             headers: {
                  "Api-Key": `${API_KEY}`, "Api-Username": `${user}`
-        },body:data , contentType: "application/json", dataType: 'json' }).then(response=>{if(response.ok){return response.json()}})
+        },
+        body:data }).then(response=>{if(response.ok){return response.json()}})
     if(putBKRJSON.user.title.length!=0){
         console.log(`Title still not empty :(`)
+        return false
     } else {
         console.log(`emptied title, fuck'em motherfuckers`)
+        return true
     }
     } catch (error) {
         console.log(error)    
     }
 }
 
+
 GETemptyTitle()
+
 PUTemptyTitle()
 
-// let oneBearer = await 
-// fetch(oathUrl,{
-//     method: 'POST', 
-//     headers: {"Authorization": `Basic ${basicAuth}`}
-// }).then(response=>{if(response.ok){return response.json()} })
+// const getTitle= async ()=> await GETemptyTitle()
+// const putTitle= async () =>await PUTemptyTitle()
+
+// while(!getTitle()){
+//     putTitle()
+// }
