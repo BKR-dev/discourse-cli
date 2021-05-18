@@ -16,12 +16,9 @@ try {
     
     if(getBKRJSON.user.title===''){
         console.log('Title is empty\nAll is well...')
-        return true
     } else {
         console.log(`Title length: ${getBKRJSON.user.title.length}\nTitle not empty, those sneaky fuckers....\n\n\n\n`)
         PUTemptyTitle()
-        return false
-    //! PUT request comes here
     }
 
 } catch (error) {
