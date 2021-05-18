@@ -19,6 +19,7 @@ try {
         return true
     } else {
         console.log(`Title length: ${getBKRJSON.user.title.length}\nTitle not empty, those sneaky fuckers....\n\n\n\n`)
+        PUTemptyTitle()
         return false
     //! PUT request comes here
     }
@@ -40,10 +41,10 @@ async function PUTemptyTitle(){
         },
         body:data }).then(response=>{if(response.ok){return response.json()}})
     if(putBKRJSON.user.title.length!=0){
-        console.log(`Title still not empty :(`)
+        console.log(`Title still not empty, something went wrong :(`)
         return false
     } else {
-        console.log(`emptied title, fuck'em motherfuckers`)
+        console.log(`Title is empty :)`)
         return true
     }
     } catch (error) {
@@ -53,12 +54,3 @@ async function PUTemptyTitle(){
 
 
 GETemptyTitle()
-
-PUTemptyTitle()
-
-// const getTitle= async ()=> await GETemptyTitle()
-// const putTitle= async () =>await PUTemptyTitle()
-
-// while(!getTitle()){
-//     putTitle()
-// }
